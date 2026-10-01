@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import type { Producto } from './types/Producto';
 import { PRODUCTOS_ABARROTES } from './data/productos';
 import { Header } from './components/Header';
@@ -6,20 +6,22 @@ import { CategoryFilter } from './components/CategoryFilter';
 import { ProductoCard } from './components/ProductoCard';
 import { TiendaStats } from './components/TiendaStats';
 import { ProductoDetailModal } from './components/ProductoDetailModal';
-import { LoadingTimer } from './components/LoadingTimer';
+// import { LoadingTimer } from './components/LoadingTimer';
 import { filtrarPorCategoria, buscarProductos } from './utils/productoUtils';
 import { Package } from 'lucide-react';
 
 function App() {
-  const [productos, setProductos] = useState<Producto[]>([]);
-  const [cargando, setCargando] = useState<boolean>(true);
-  const [segundosRestantes, setSegundosRestantes] = useState<number>(3.0);
+  const [productos] = useState<Producto[]>(PRODUCTOS_ABARROTES);
+  // const [cargando, setCargando] = useState<boolean>(true);
+  // const [segundosRestantes, setSegundosRestantes] = useState<number>(3.0);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<string>('Todos');
   const [busqueda, setBusqueda] = useState<string>('');
   const [favoritos, setFavoritos] = useState<number[]>([]);
   const [mostrarSoloFavoritos, setMostrarSoloFavoritos] = useState<boolean>(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null);
 
+  /*
+  // Temporizador de 3 segundos y carga asíncrona (Comentado)
   useEffect(() => {
     const cargarCatalogoAsincrono = async () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -44,6 +46,7 @@ function App() {
 
     return () => clearInterval(intervalo);
   }, []);
+  */
 
   const categorias = useMemo(() => {
     return ['Todos', ...Array.from(new Set(productos.map((p) => p.categoria)))];
@@ -94,9 +97,9 @@ function App() {
           </div>
         </div>
 
-        {cargando ? (
+        {/* {cargando ? (
           <LoadingTimer segundosRestantes={segundosRestantes} />
-        ) : (
+        ) : ( */}
           <>
             <TiendaStats productos={productos} />
 
@@ -126,7 +129,7 @@ function App() {
               </div>
             )}
           </>
-        )}
+        {/* )} */}
 
       </main>
 
